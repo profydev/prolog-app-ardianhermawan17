@@ -18,11 +18,15 @@ export function MenuItemButton({
   iconSrc,
   isCollapsed,
 }: MenuItemProps) {
+  const isCollapseIcon: boolean = text === "Collapse";
+  const imgClass: string = classNames(styles.icon, {
+    [styles.transformFlip]: isCollapseIcon && isCollapsed,
+  });
   return (
     <li className={classNames(styles.listItem, className)}>
       <Button className={styles.anchor} onClick={onClick}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className={styles.icon} src={iconSrc} alt={`${text} icon`} />{" "}
+        <img className={imgClass} src={iconSrc} alt={`${text} icon`} />{" "}
         {!isCollapsed && text}{" "}
       </Button>
     </li>
