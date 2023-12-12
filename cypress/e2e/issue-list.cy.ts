@@ -28,6 +28,10 @@ describe("Issue List", () => {
     // set button aliases
     cy.get("button").contains("Previous").as("prev-button");
     cy.get("button").contains("Next").as("next-button");
+
+    // Set row event and user
+    cy.get("tbody").find("tr:first td").eq(2).as("row-event");
+    cy.get("tbody").find("tr:first td").eq(3).as("row-user");
   });
 
   context("desktop resolution", () => {
@@ -71,6 +75,14 @@ describe("Issue List", () => {
       cy.get("@next-button").should("not.have.attr", "disabled");
       cy.contains("Page 2 of 3");
       cy.get("tbody tr:first").contains(mockIssues2.items[0].message);
+    });
+
+    it("Should consume issue data", () => {
+      cy.wait("@getIssuesPage1");
+      cy.wait(1500);
+
+      cy.get("@row-event").contains(mockIssues1.items[0].numEvents);
+      cy.get("@row-user").contains(mockIssues1.items[0].numUsers);
     });
 
     it("persists page after reload", () => {
