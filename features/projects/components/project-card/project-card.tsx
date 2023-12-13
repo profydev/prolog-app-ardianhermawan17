@@ -5,6 +5,7 @@ import { Routes } from "@config/routes";
 import { ProjectLanguage, ProjectStatus } from "@api/projects.types";
 import type { Project } from "@api/projects.types";
 import styles from "./project-card.module.scss";
+import { changeStatusCode } from "@utils/helpers";
 
 type ProjectCardProps = {
   project: Project;
@@ -16,7 +17,7 @@ const languageNames = {
   [ProjectLanguage.python]: "Python",
 };
 
-const statusColors = {
+const statusColors: { [index: string]: BadgeColor } = {
   [ProjectStatus.stable]: BadgeColor.success,
   [ProjectStatus.warning]: BadgeColor.warning,
   [ProjectStatus.critical]: BadgeColor.error,
@@ -50,7 +51,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <div className={styles.issuesNumber}>{numEvents24h}</div>
           </div>
           <div className={styles.status}>
-            <Badge color={statusColors[status]}>{capitalize(status)}</Badge>
+            <Badge
+              dataTestId={`projects-issue-card-badge-${changeStatusCode(
+                status,
+              )}`}
+              color={statusColors[changeStatusCode(status)]}
+            >
+              {capitalize(changeStatusCode(status))}
+            </Badge>
           </div>
         </div>
       </div>

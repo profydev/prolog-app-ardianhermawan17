@@ -20,15 +20,20 @@ type BadgeProps = {
   children: React.ReactNode;
   size?: BadgeSize;
   color?: BadgeColor;
+  dataTestId?: string;
 };
 
 export function Badge({
   children,
   size = BadgeSize.md,
   color = BadgeColor.primary,
+  dataTestId,
 }: BadgeProps) {
   return (
-    <div className={classNames(styles.container, styles[size], styles[color])}>
+    <div
+      data-test-id={dataTestId}
+      className={classNames(styles.container, styles[size], styles[color])}
+    >
       {children}
     </div>
   );
