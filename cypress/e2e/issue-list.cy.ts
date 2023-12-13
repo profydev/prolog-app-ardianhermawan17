@@ -78,6 +78,7 @@ describe("Issue List", () => {
     });
 
     it("Should consume issue data", () => {
+      cy.reload();
       cy.wait("@getIssuesPage1");
       cy.wait(1500);
 
